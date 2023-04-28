@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brewery</title>
+</head>
+<body data-th-object="${br}">
+    <h1><span data-th-text="*{name}"></span></h1>
+    <br>
+    <a href="/" class="button">Back</a>
+    <br>
+    <table>
+        <tr>
+            <td>Description</td>
+            <td><span data-th-text="*{description}"></span></td>
+        </tr>
+        <tr>
+            <td rowspan="3">Address</td>
+            <td><span data-th-text="*{address1}"></span></td>
+        </tr>
+        <tr>
+            
+            <td><span data-th-text="*{address2}"></span></td>
+        </tr>
+        <tr>
+            <td><span data-th-text="*{city}"></span></td>
+        </tr>
+        <tr>
+            <td>Phone</td>
+            <td><span data-th-text="*{phone}"></span></td>
+        </tr>
+        <tr>
+            <td>Website</td>
+            <td>
+                <a data-th-href="@{*{website}}">
+                    <span data-th-text="*{website}"></span>
+                </a>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <form method="POST"
+        data-th-action="@{/brewery/{id}/order(id=*{breweryId})}">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Beer Name</th>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-th-each="b: ${br.beers}" data-th-object="${br}">
+                    <td>
+                        <span data-th-text="${b.beerName}"></span> 
+                    </td>
+                    <td>
+                        <span data-th-text="${b.beerDescription}"></span> 
+                    </td>
+                    <td>
+                        <input type="text" th:attr="name=${b.beerId}">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <button type="submit">Place Order</button>
+    </form>
+</body>
+</html>
