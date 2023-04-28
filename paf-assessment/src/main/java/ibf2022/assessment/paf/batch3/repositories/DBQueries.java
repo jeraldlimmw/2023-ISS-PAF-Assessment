@@ -24,6 +24,7 @@ public class DBQueries {
             from breweries as br
             inner join beers as b on br.id = b.brewery_id
             where br.id like ?
+            order by beerName
             """;
 
 }

@@ -2,6 +2,7 @@ package ibf2022.assessment.paf.batch3.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,14 +51,18 @@ public class BeerController {
 		m.addAttribute("beers", b);
 		return "view1";
 	}
-
+	
 	//TODO Task 4 - view 2
 	@GetMapping(path="/beer/brewery/{id}")
 	public String showBeersInBrewery(Model m, @PathVariable String id, @RequestParam String breweryName) {
 		Optional<Brewery> brewery = bRepo.getBeersFromBrewery(Integer.parseInt(id));
+		if (Objects.isNull(brewery.get())) {
+			m.addAttribute("breweryName", null);
+		} else {
+			m.addAttribute("br", brewery.get());
+			m.addAttribute("breweryName", breweryName);
+		}
 		
-		m.addAttribute("br", brewery.get());
-		m.addAttribute("breweryName", breweryName);
 		return "view2";
 	}
 
@@ -73,11 +78,11 @@ public class BeerController {
 		for (int i = 0; i < beerMap.keySet().size(); i++) {
 			String beerId = String.valueOf(beerList.get(i).getBeerId());
 			String q = beerMap.getFirst(beerId);
-			if (!q.isEmpty()) {
+			if (q.isEmpty() || Integer.parseInt(q) < 1) {
+				continue;
+			} else {
 				Order o = new Order(beerId, Integer.parseInt(q));
 				orderList.add(o);
-			} else {
-				continue;
 			}
 		}
 

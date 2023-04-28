@@ -64,7 +64,7 @@ public class BeerRepository {
 		SqlRowSet rs = jdbcTemplate.queryForRowSet(SELECT_BEERS_BY_BREWERY, id);
 
 		if (Objects.isNull(rs.first())) {
-			return Optional.empty();
+			return null;
 		}
 
 		Brewery b = new Brewery();

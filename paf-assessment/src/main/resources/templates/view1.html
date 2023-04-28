@@ -7,33 +7,38 @@
     <title>Beers by Style</title>
 </head>
 <body>
-    <h1><span data-th-text="*{styleName}"></span></h1>
-    <br>
-    <a href="/" class="button">Back</a>
-    <br>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Beer Name</th>
-                <th>Description</th>
-                <th>Brewery Name</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr data-th-each="b: ${beers}" data-th-object="${b}">
-                <td>
-                    <span data-th-text="*{beerName}"></span> 
-                </td>
-                <td>
-                    <span data-th-text="*{beerDescription}"></span> 
-                </td>
-                <td>
-                    <a data-th-href="@{/beer/brewery/{id}?breweryName={breweryName}(id=*{breweryId}, breweryName=*{breweryName})}">
-                        <span data-th-text="*{breweryName}"></span>
-                    </a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div data-th-if="${#lists.isEmpty(beers)}">
+        <h1>No beers found for this style</h1>
+    </div>
+    <div data-th-unless="${#lists.isEmpty(beers)}">
+        <h1><span data-th-text="*{styleName}"></span></h1>
+        <br>
+        <a href="/" class="button">Back</a>
+        <br>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Beer Name</th>
+                    <th>Description</th>
+                    <th>Brewery Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-th-each="b: ${beers}" data-th-object="${b}">
+                    <td>
+                        <span data-th-text="*{beerName}"></span> 
+                    </td>
+                    <td>
+                        <span data-th-text="*{beerDescription}"></span> 
+                    </td>
+                    <td>
+                        <a data-th-href="@{/beer/brewery/{id}?breweryName={breweryName}(id=*{breweryId}, breweryName=*{breweryName})}">
+                            <span data-th-text="*{breweryName}"></span>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
